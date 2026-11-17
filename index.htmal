@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio Rosé | Nail Designer & Spa</title>
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts: Cormorant Garamond (Títulos Elegantes) + Plus Jakarta Sans (UI Limpa) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Configuração Personalizada do Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                    },
+                    colors: {
+                        rosebrand: {
+                            50: '#FDF2F8',
+                            100: '#FCE7F3',
+                            200: '#FBCFE8',
+                            300: '#F9A8D4',
+                            400: '#F472B6',
+                            500: '#EC4899',
+                            600: '#DB2777',
+                            700: '#BE185D',
+                            800: '#9D174D',
+                            900: '#831843',
+                        },
+                        rosegold: {
+                            light: '#F5E1DA',
+                            DEFAULT: '#B76E79',
+                            dark: '#8E4A55'
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'fade-in': 'fadeIn 0.4s ease-out forwards',
+                        'slide-up': 'slideUp 0.4s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(16px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Estilos customizados para barra de rolagem e transições suaves */
+        body {
+            background-color: #FDF2F8;
+            color: #4A152B;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Barra de progresso da Splash Screen (exatos 2 segundos) */
+        @keyframes loadProgress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        .splash-loader {
+            animation: loadProgress 2s linear forwards;
+        }
+
+        /* Esconder scrollbar mantendo funcionalidade em carrosséis horizontais */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Efeito de vidro sutil */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(251, 207, 232, 0.7);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-gradient-to-b from-rosebrand-50 via-rosebrand-100/60 to-rosebrand-50 selection:bg-rosebrand-200 selection:text-rosebrand-900">
+
+    <!-- ===================================================================== -->
+    <!-- 1. SPLASH SCREEN (TELA DE ABERTURA - 2 SEGUNDOS)                      -->
+    <!-- ===================================================================== -->
+    <div id="splash-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-rosebrand-100 via-rosebrand-200 to-rosebrand-300 transition-opacity duration-500">
+        <!-- Elementos decorativos de fundo -->
+        <div class="absolute top-10 left-10 w-32 h-32 bg-white/30 rounded-full blur-2xl"></div>
+        <div class="absolute bottom-12 right-10 w-44 h-44 bg-rosebrand-400/20 rounded-full blur-3xl"></div>
+
+        <!-- Logo Centralizado -->
+        <div class="relative z-10 flex flex-col items-center text-center px-6 animate-slide-up">
+            <div class="w-28 h-28 rounded-full bg-white shadow-xl shadow-rosebrand-600/15 flex items-center justify-center mb-5 border-2 border-rosebrand-200 relative">
+                <!-- SVG Estilizado de Nail Designer (Mão elegante / Esmalte / Brilho) -->
+                <svg class="w-16 h-16 text-rosebrand-600" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Frasco de Esmalte Estilizado -->
+                    <rect x="24" y="8" width="16" height="16" rx="3" fill="#DB2777"/>
+                    <path d="M27 24H37V28H27V24Z" fill="#BE185D"/>
+                    <path d="M18 32C18 29.7909 19.7909 28 22 28H42C44.2091 28 46 29.7909 46 32V50C46 53.3137 43.3137 56 40 56H24C20.6863 56 18 53.3137 18 50V32Z" fill="#FCE7F3" stroke="#DB2777" stroke-width="2.5"/>
+                    <!-- Coração / Gota de brilho no frasco -->
+                    <path d="M32 47C32 47 25 42.5 25 38.2C25 36.1 26.6 34.5 28.6 34.5C29.9 34.5 31.1 35.2 32 36.3C32.9 35.2 34.1 34.5 35.4 34.5C37.4 34.5 39 36.1 39 38.2C39 42.5 32 47 32 47Z" fill="#DB2777"/>
+                    <!-- Estrelinhas de brilho -->
+                    <path d="M13 18L14.2 21.3L17.5 22.5L14.2 23.7L13 27L11.8 23.7L8.5 22.5L11.8 21.3L13 18Z" fill="#BE185D"/>
+                    <path d="M51 14L51.8 16.2L54 17L51.8 17.8L51 20L50.2 17.8L48 17L50.2 16.2L51 14Z" fill="#BE185D"/>
+                </svg>
+            </div>
+            
+            <h1 class="font-serif text-4xl sm:text-5xl font-bold text-rosebrand-900 tracking-tight">
+                Studio Rosé
+            </h1>
+            <p class="text-xs sm:text-sm uppercase tracking-[0.28em] text-rosebrand-700 font-semibold mt-1">
+                Nail Designer & Spa
+            </p>
+
+            <!-- Barra de carregamento de 2 segundos -->
+            <div class="w-48 h-1.5 bg-white/60 rounded-full overflow-hidden mt-8 shadow-inner">
+                <div class="h-full bg-gradient-to-r from-rosebrand-500 to-rosebrand-700 rounded-full splash-loader"></div>
+            </div>
+            <p class="text-xs text-rosebrand-800/75 mt-2.5 font-medium">Preparando seu momento...</p>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- SISTEMA DE NOTIFICAÇÃO (TOAST)                                        -->
+    <!-- ===================================================================== -->
+    <div id="toast-container" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-md pointer-events-none flex flex-col gap-2"></div>
+
+    <!-- ===================================================================== -->
+    <!-- CONTAINER PRINCIPAL DO APLICATIVO                                     -->
+    <!-- ===================================================================== -->
+    <div id="app-wrapper" class="hidden flex-1 flex flex-col max-w-2xl w-full mx-auto px-4 py-5 sm:py-8">
+        
+        <!-- CABEÇALHO COM LOGO CENTRALIZADO (VISÍVEL EM TODAS AS TELAS) -->
+        <header class="flex flex-col items-center justify-center mb-6 relative">
+            <!-- Botão Voltar (aparece quando não está na Home) -->
+            <button id="btn-back-home" onclick="navigateTo('home')" class="hidden absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 border border-rosebrand-200 text-rosebrand-700 shadow-sm hover:bg-rosebrand-100 active:scale-95 transition flex items-center justify-center" title="Voltar ao início">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+
+            <!-- Logo Clicável para Home -->
+            <div onclick="navigateTo('home')" class="cursor-pointer flex flex-col items-center group">
+                <div class="w-14 h-14 rounded-full bg-white shadow-md shadow-rosebrand-500/10 border border-rosebrand-200 flex items-center justify-center mb-1.5 group-hover:scale-105 transition-transform">
+                    <svg class="w-8 h-8 text-rosebrand-600" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="24" y="8" width="16" height="16" rx="3" fill="#DB2777"/>
+                        <path d="M27 24H37V28H27V24Z" fill="#BE185D"/>
+                        <path d="M18 32C18 29.7909 19.7909 28 22 28H42C44.2091 28 46 29.7909 46 32V50C46 53.3137 43.3137 56 40 56H24C20.6863 56 18 53.3137 18 50V32Z" fill="#FCE7F3" stroke="#DB2777" stroke-width="2.5"/>
+                        <path d="M32 47C32 47 25 42.5 25 38.2C25 36.1 26.6 34.5 28.6 34.5C29.9 34.5 31.1 35.2 32 36.3C32.9 35.2 34.1 34.5 35.4 34.5C37.4 34.5 39 36.1 39 38.2C39 42.5 32 47 32 47Z" fill="#DB2777"/>
+                    </svg>
+                </div>
+                <span class="font-serif text-2xl font-bold text-rosebrand-900 leading-none">Studio Rosé</span>
+                <span class="text-[10px] uppercase tracking-[0.22em] text-rosebrand-600 font-semibold mt-0.5">Nail Designer</span>
+            </div>
+        </header>
+
+        <!-- ================================================================= -->
+        <!-- TELA 1: TELA INICIAL (HOME)                                       -->
+        <!-- ================================================================= -->
+        <main id="view-home" class="flex-1 flex flex-col justify-between animate-fade-in">
+            <div class="space-y-6">
+                <!-- Banner de Boas-Vindas -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 text-center shadow-lg shadow-rosebrand-900/5 relative overflow-hidden">
+                    <div class="absolute -right-8 -top-8 w-28 h-28 bg-rosebrand-200/50 rounded-full blur-xl"></div>
+                    <div class="absolute -left-8 -bottom-8 w-28 h-28 bg-rosebrand-300/30 rounded-full blur-xl"></div>
+                    
+                    <span class="inline-block px-3.5 py-1 rounded-full bg-rosebrand-100 text-rosebrand-700 text-xs font-semibold mb-3">
+                        <i class="fa-solid fa-sparkles mr-1"></i> Realce sua beleza
+                    </span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-bold text-rosebrand-950 mb-2">
+                        Unhas impecáveis, feitas para você
+                    </h2>
+                    <p class="text-sm text-rosebrand-800/80 max-w-md mx-auto leading-relaxed mb-6">
+                        Agende seu horário em poucos segundos com nossas especialistas em alongamento, blindagem e nail art.
+                    </p>
+
+                    <!-- Botão Principal: Agendar Horário -->
+                    <button onclick="startBookingFlow()" class="w-full sm:w-auto sm:px-10 py-4 bg-gradient-to-r from-rosebrand-600 to-rosebrand-700 hover:from-rosebrand-700 hover:to-rosebrand-800 text-white font-semibold rounded-2xl shadow-lg shadow-rosebrand-600/30 active:scale-[0.98] transition-all flex items-center justify-center gap-3 mx-auto text-base">
+                        <i class="fa-regular fa-calendar-check text-lg"></i>
+                        <span>Agendar Meu Horário</span>
+                    </button>
+                </div>
+
+                <!-- Cards Rápidos: Meus Agendamentos e Serviços -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <button onclick="navigateTo('my-bookings')" class="glass-card p-4 rounded-2xl flex items-center gap-4 text-left hover:border-rosebrand-400 transition active:scale-[0.99] shadow-sm">
+                        <div class="w-12 h-12 rounded-2xl bg-rosebrand-100 text-rosebrand-600 flex items-center justify-center shrink-0 text-lg">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-rosebrand-950 text-sm">Meus Agendamentos</h3>
+                            <p class="text-xs text-rosebrand-700/80 mt-0.5">Consulte ou cancele seu horário</p>
+                        </div>
+                    </button>
+
+                    <div class="glass-card p-4 rounded-2xl flex items-center gap-4 text-left shadow-sm">
+                        <div class="w-12 h-12 rounded-2xl bg-rosebrand-100 text-rosebrand-600 flex items-center justify-center shrink-0 text-lg">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-rosebrand-950 text-sm">Atendimento Exclusivo</h3>
+                            <p class="text-xs text-rosebrand-700/80 mt-0.5">Seg a Sáb • 09:00 às 19:00</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vitrine Rápida de Serviços Populares -->
+                <div class="glass-card rounded-3xl p-5 shadow-sm">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="font-serif text-xl font-bold text-rosebrand-950">Nossos Serviços</h3>
+                        <span class="text-xs text-rosebrand-600 font-semibold">Valores a partir de</span>
+                    </div>
+                    <div id="home-services-preview" class="divide-y divide-rosebrand-100">
+                        <!-- Preenchido via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rodapé Discreto com Acesso à Área da Profissional -->
+            <footer class="mt-8 pt-4 border-t border-rosebrand-200/60 flex flex-col items-center gap-3">
+                <button onclick="openProLoginModal()" class="px-4 py-2 rounded-full bg-white/80 hover:bg-white border border-rosebrand-200 text-rosebrand-700 text-xs font-semibold flex items-center gap-2 shadow-sm transition active:scale-95">
+                    <i class="fa-solid fa-lock text-rosebrand-500"></i>
+                    <span>Área da Profissional</span>
+                </button>
+                <p class="text-[11px] text-rosebrand-700/60">© 2026 Studio Rosé Nail Designer</p>
+            </footer>
+        </main>
+
+        <!-- ================================================================= -->
+        <!-- TELA 2: FLUXO DE AGENDAMENTO DO CLIENTE                           -->
+        <!-- ================================================================= -->
+        <section id="view-booking" class="hidden flex-1 flex flex-col animate-fade-in">
+            <!-- Barra de Progresso dos Passos -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between text-xs font-semibold text-rosebrand-700 mb-2">
+                    <span id="booking-step-label">Passo 1 de 4: Profissional</span>
+                    <span id="booking-step-percent">25%</span>
+                </div>
+                <div class="w-full h-2 bg-rosebrand-200/70 rounded-full overflow-hidden">
+                    <div id="booking-progress-bar" class="h-full bg-rosebrand-600 rounded-full transition-all duration-300" style="width: 25%"></div>
+                </div>
+            </div>
+
+            <!-- PASSO 1: ESCOLHA DA PROFISSIONAL -->
+            <div id="booking-step-1" class="space-y-4">
+                <h2 class="font-serif text-2xl font-bold text-rosebrand-950">Escolha a Profissional</h2>
+                <p class="text-xs text-rosebrand-700/80 -mt-2">Selecione quem vai cuidar das suas unhas hoje:</p>
+                <div id="professionals-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
+                    <!-- Renderizado via JS -->
+                </div>
+            </div>
+
+            <!-- PASSO 2: ESCOLHA DO SERVIÇO -->
+            <div id="booking-step-2" class="hidden space-y-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="font-serif text-2xl font-bold text-rosebrand-950">Escolha o Serviço</h2>
+                        <p class="text-xs text-rosebrand-700/80">Profissional: <strong id="selected-pro-name-step2" class="text-rosebrand-700"></strong></p>
+                    </div>
+                    <button onclick="goToBookingStep(1)" class="text-xs font-semibold text-rosebrand-600 hover:underline">Trocar</button>
+                </div>
+                <div id="services-list" class="space-y-2.5 pt-1">
+                    <!-- Renderizado via JS -->
+                </div>
+            </div>
+
+            <!-- PASSO 3: DATA E HORÁRIO -->
+            <div id="booking-step-3" class="hidden space-y-5">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="font-serif text-2xl font-bold text-rosebrand-950">Data e Horário</h2>
+                        <p class="text-xs text-rosebrand-700/80"><span id="summary-step3-service"></span> • <span id="summary-step3-pro"></span></p>
+                    </div>
+                    <button onclick="goToBookingStep(2)" class="text-xs font-semibold text-rosebrand-600 hover:underline">Trocar</button>
+                </div>
+
+                <!-- Seletor de Data -->
+                <div class="glass-card p-4 rounded-2xl">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-rosebrand-800 mb-2">
+                        <i class="fa-regular fa-calendar mr-1 text-rosebrand-600"></i> Selecione a Data
+                    </label>
+                    <input type="date" id="booking-date-input" onchange="handleDateChange()" class="w-full px-4 py-3 rounded-xl bg-white border border-rosebrand-200 text-rosebrand-950 font-semibold focus:outline-none focus:ring-2 focus:ring-rosebrand-500">
+                </div>
+
+                <!-- Grade de Horários Disponíveis -->
+                <div class="glass-card p-4 rounded-2xl">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-rosebrand-800 mb-3">
+                        <i class="fa-regular fa-clock mr-1 text-rosebrand-600"></i> Horários Disponíveis
+                    </label>
+                    <div id="available-slots-grid" class="grid grid-cols-3 sm:grid-cols-4 gap-2.5">
+                        <!-- Renderizado via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- PASSO 4: DADOS DA CLIENTE E CONFIRMAÇÃO -->
+            <div id="booking-step-4" class="hidden space-y-5">
+                <div class="flex items-center justify-between">
+                    <h2 class="font-serif text-2xl font-bold text-rosebrand-950">Seus Dados</h2>
+                    <button onclick="goToBookingStep(3)" class="text-xs font-semibold text-rosebrand-600 hover:underline">Voltar</button>
+                </div>
+
+                <!-- Resumo do Agendamento -->
+                <div class="bg-gradient-to-br from-rosebrand-600 to-rosebrand-700 text-white p-5 rounded-3xl shadow-md space-y-2.5">
+                    <div class="flex items-center justify-between border-b border-white/20 pb-2">
+                        <span class="text-xs uppercase tracking-wider text-rosebrand-100 font-semibold">Resumo da Reserva</span>
+                        <span id="confirm-price" class="text-lg font-bold">R$ 0,00</span>
+                    </div>
+                    <p class="text-sm flex items-center gap-2"><i class="fa-solid fa-sparkles w-4 text-rosebrand-200"></i> <strong id="confirm-service"></strong></p>
+                    <p class="text-sm flex items-center gap-2"><i class="fa-solid fa-user-check w-4 text-rosebrand-200"></i> Com <strong id="confirm-pro"></strong></p>
+                    <p class="text-sm flex items-center gap-2"><i class="fa-regular fa-calendar-check w-4 text-rosebrand-200"></i> <strong id="confirm-datetime"></strong></p>
+                </div>
+
+                <!-- Formulário Cliente -->
+                <form onsubmit="submitBooking(event)" class="glass-card p-5 rounded-3xl space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-rosebrand-900 mb-1.5">Seu Nome Completo *</label>
+                        <input type="text" id="client-name" required placeholder="Ex: Mariana Oliveira" class="w-full px-4 py-3 rounded-xl bg-white border border-rosebrand-200 text-rosebrand-950 focus:outline-none focus:ring-2 focus:ring-rosebrand-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-rosebrand-900 mb-1.5">Seu WhatsApp (com DDD) *</label>
+                        <input type="tel" id="client-phone" required placeholder="(11) 99999-9999" oninput="maskPhone(this)" maxlength="15" class="w-full px-4 py-3 rounded-xl bg-white border border-rosebrand-200 text-rosebrand-950 focus:outline-none focus:ring-2 focus:ring-rosebrand-500">
+                    </div>
+                    <button type="submit" class="w-full py-4 bg-gradient-to-r from-rosebrand-600 to-rosebrand-700 hover:from-rosebrand-700 hover:to-rosebrand-800 text-white font-bold rounded-2xl shadow-lg shadow-rosebrand-600/25 active:scale-[0.98] transition flex items-center justify-center gap-2 text-base">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span>Confirmar Agendamento</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- PASSO 5: TELA DE SUCESSO DO AGENDAMENTO -->
+            <div id="booking-step-success" class="hidden glass-card p-6 sm:p-8 rounded-3xl text-center space-y-5 animate-slide-up shadow-xl">
+                <div class="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto text-4xl shadow-inner">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <div>
+                    <h2 class="font-serif text-3xl font-bold text-rosebrand-950">Horário Reservado!</h2>
+                    <p class="text-sm text-rosebrand-700 mt-1">Tudo pronto para deixarmos suas unhas maravilhosas.</p>
+                </div>
+
+                <div id="success-receipt-box" class="bg-rosebrand-50 border border-rosebrand-200 rounded-2xl p-4 text-left text-sm space-y-1.5 text-rosebrand-900">
+                    <!-- Preenchido via JS -->
+                </div>
+
+                <div class="flex flex-col gap-2.5 pt-2">
+                    <a id="btn-whatsapp-receipt" href="#" target="_blank" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl shadow-md flex items-center justify-center gap-2 transition">
+                        <i class="fa-brands fa-whatsapp text-xl"></i>
+                        <span>Enviar Comprovante no WhatsApp</span>
+                    </a>
+                    <button onclick="navigateTo('home')" class="w-full py-3 bg-rosebrand-100 hover:bg-rosebrand-200 text-rosebrand-800 font-semibold rounded-2xl transition">
+                        Voltar ao Início
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- TELA 3: MEUS AGENDAMENTOS (CONSULTA DA CLIENTE)                   -->
+        <!-- ================================================================= -->
+        <section id="view-my-bookings" class="hidden flex-1 space-y-5 animate-fade-in">
+            <div class="glass-card p-5 rounded-3xl">
+                <h2 class="font-serif text-2xl font-bold text-rosebrand-950 mb-1">Meus Agendamentos</h2>
+                <p class="text-xs text-rosebrand-700/80 mb-4">Digite seu WhatsApp para localizar seus horários marcados.</p>
+                
+                <div class="flex gap-2">
+                    <input type="tel" id="search-client-phone" placeholder="(11) 99999-9999" oninput="maskPhone(this)" maxlength="15" class="flex-1 px-4 py-3 rounded-xl bg-white border border-rosebrand-200 text-rosebrand-950 focus:outline-none focus:ring-2 focus:ring-rosebrand-500">
+                    <button onclick="searchClientBookings()" class="px-5 py-3 bg-rosebrand-600 hover:bg-rosebrand-700 text-white font-semibold rounded-xl shadow-sm transition">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="client-bookings-results" class="space-y-3">
+                <!-- Resultados da busca -->
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- TELA 4: PAINEL DA PROFISSIONAL (AGENDA, FATURAMENTO E HORÁRIOS)   -->
+        <!-- ================================================================= -->
+        <section id="view-pro-dashboard" class="hidden flex-1 space-y-5 animate-fade-in pb-10">
+            <!-- Barra Superior do Painel -->
+            <div class="glass-card p-4 rounded-3xl flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-rosebrand-600 text-white flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-crown"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-serif text-xl font-bold text-rosebrand-950 leading-tight">Painel da Profissional</h2>
+                        <p class="text-xs text-rosebrand-600 font-medium">Gestão de Agenda & Faturamento</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 w-full sm:w-auto">
+                    <!-- Filtro de Profissional -->
+                    <select id="pro-filter-select" onchange="refreshProDashboard()" class="flex-1 sm:flex-initial px-3 py-2 rounded-xl bg-white border border-rosebrand-200 text-xs font-bold text-rosebrand-900 focus:outline-none focus:ring-2 focus:ring-rosebrand-500">
+                        <option value="all">Todas Profissionais</option>
+                        <!-- Opções preenchidas via JS -->
+                    </select>
+                    <button onclick="logoutPro()" class="px-3 py-2 rounded-xl bg-rosebrand-100 hover:bg-rosebrand-200 text-rosebrand-800 text-xs font-semibold transition" title="Sair do painel">
+                        <i class="fa-solid fa-right-from-bracket"></i> Sair
+                    </button>
+                </div>
+            </div>
+
+            <!-- CARDS DE FATURAMENTO -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div class="glass-card p-4 rounded-2xl border-l-4 border-l-rosebrand-600">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-rosebrand-600 block">Hoje (Previsto)</span>
+                    <strong id="kpi-today-revenue" class="text-lg sm:text-xl font-extrabold text-rosebrand-950 mt-1 block">R$ 0,00</strong>
+                </div>
+                <div class="glass-card p-4 rounded-2xl border-l-4 border-l-emerald-500">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-700 block">Mês (Total)</span>
+                    <strong id="kpi-month-revenue" class="text-lg sm:text-xl font-extrabold text-rosebrand-950 mt-1 block">R$ 0,00</strong>
+                </div>
+                <div class="glass-card p-4 rounded-2xl border-l-4 border-l-amber-500">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-amber-700 block">Atendimentos</span>
+                    <strong id="kpi-total-count" class="text-lg sm:text-xl font-extrabold text-rosebrand-950 mt-1 block">0</strong>
+                </div>
+                <div class="glass-card p-4 rounded-2xl border-l-4 border-l-purple-500">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-purple-700 block">Ticket Médio</span>
+                    <strong id="kpi-avg-ticket" class="text-lg sm:text-xl font-extrabold text-rosebrand-950 mt-1 block">R$ 0,00</strong>
+                </div>
+            </div>
+
+            <!-- ABAS DE NAVEGAÇÃO DO PAINEL -->
+            <div class="flex bg-white/80 p-1.5 rounded-2xl border border-rosebrand-200">
+                <button id="tab-btn-agenda" onclick="switchProTab('agenda')" class="flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-rosebrand-600 text-white shadow-sm transition">
+                    <i class="fa-regular fa-calendar-days mr-1.5"></i> Agenda & Clientes
+                </button>
+                <button id="tab-btn-slots" onclick="switchProTab('slots')" class="flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-rosebrand-700 hover:bg-rosebrand-50 transition">
+                    <i class="fa-solid fa-sliders mr-1.5"></i> Horários & Bloqueios
+                </button>
+            </div>
+
+            <!-- ABA 1: AGENDA DO DIA / DATA SELECIONADA -->
+            <div id="pro-tab-agenda" class="space-y-4">
+                <div class="glass-card p-4 rounded-2xl flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex items-center gap-2">
+                        <label class="text-xs font-bold text-rosebrand-900">Data da Agenda:</label>
+                        <input type="date" id="pro-agenda-date" onchange="refreshProDashboard()" class="px-3 py-2 rounded-xl bg-white border border-rosebrand-200 text-xs font-bold text-rosebrand-950 focus:outline-none focus:ring-2 focus:ring-rosebrand-500">
+                    </div>
+                    <button onclick="setProDateToday()" class="text-xs font-semibold text-rosebrand-600 hover:underline">
+                        Ir para Hoje
+                    </button>
+                </div>
+
+                <!-- Lista de Agendamentos -->
+                <div id="pro-appointments-list" class="space-y-3">
+                    <!-- Renderizado via JS -->
+                </div>
+            </div>
+
+            <!-- ABA 2: GESTÃO DE HORÁRIOS (ADICIONAR EXTRA / BLOQUEAR) -->
+            <div id="pro-tab-slots" class="hidden space-y-5">
+                <!-- Formulário para Adicionar Horário Extra ou Bloquear -->
+                <div class="glass-card p-5 rounded-3xl space-y-4">
+                    <h3 class="font-serif text-xl font-bold text-rosebrand-950">Gerenciar Disponibilidade</h3>
+                    <p class="text-xs text-rosebrand-700/80 -mt-3">Adicione horários de encaixe ou bloqueie horários/dias de folga.</p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-bold text-rosebrand-900 mb-1">Profissional</label>
+                            <select id="slot-manage-pro" onchange="renderSlotManagementList()" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-rosebrand-200 text-sm font-semibold text-rosebrand-950">
+                                <!-- Preenchido via JS -->
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-rosebrand-900 mb-1">Data</label>
+                            <input type="date" id="slot-manage-date" onchange="renderSlotManagementList()" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-rosebrand-200 text-sm font-semibold text-rosebrand-950">
+                        </div>
+                    </div>
+
+                    <!-- Ação 1: Bloquear Dia Inteiro -->
+                    <div class="pt-2 border-t border-rosebrand-100 flex items-center justify-between gap-3">
+                        <div>
+                            <h4 class="text-sm font-bold text-rosebrand-950">Bloquear Dia Inteiro</h4>
+                            <p class="text-xs text-rosebrand-700/80">Impede qualquer agendamento nesta data (folga/feriado).</p>
+                        </div>
+                        <button id="btn-toggle-block-day" onclick="toggleBlockWholeDay()" class="px-4 py-2.5 rounded-xl bg-rose-100 hover:bg-rose-200 text-rose-800 text-xs font-bold transition shrink-0">
+                            <i class="fa-solid fa-ban mr-1"></i> Bloquear Dia
+                        </button>
+                    </div>
+
+                    <!-- Ação 2: Adicionar Horário Extra (Encaixe) -->
+                    <div class="pt-3 border-t border-rosebrand-100">
+                        <label class="block text-xs font-bold text-rosebrand-900 mb-2">Adicionar Horário Extra / Encaixe</label>
+                        <div class="flex gap-2">
+                            <input type="time" id="extra-slot-time" class="flex-1 px-4 py-2.5 rounded-xl bg-white border border-rosebrand-200 text-sm font-bold text-rosebrand-950">
+                            <button onclick="addExtraSlot()" class="px-5 py-2.5 bg-rosebrand-600 hover:bg-rosebrand-700 text-white text-xs font-bold rounded-xl shadow-sm transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-plus"></i> Adicionar Horário
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grade Visual de Controle dos Horários daquela Data -->
+                <div class="glass-card p-5 rounded-3xl space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h4 class="font-bold text-sm text-rosebrand-950">Grade de Horários na Data Selecionada</h4>
+                        <span class="text-[11px] text-rosebrand-600">Toque para bloquear/liberar</span>
+                    </div>
+                    <div id="pro-slots-control-grid" class="grid grid-cols-3 sm:grid-cols-4 gap-2.5">
+                        <!-- Renderizado via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- MODAL DE LOGIN DA PROFISSIONAL (PIN)                                  -->
+    <!-- ===================================================================== -->
+    <div id="pro-login-modal" class="hidden fixed inset-0 z-50 bg-rosebrand-950/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-rosebrand-200 space-y-5 relative">
+            <button onclick="closeProLoginModal()" class="absolute right-4 top-4 w-8 h-8 rounded-full bg-rosebrand-50 text-rosebrand-600 hover:bg-rosebrand-100 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center">
+                <div class="w-14 h-14 rounded-full bg-rosebrand-100 text-rosebrand-600 flex items-center justify-center mx-auto mb-3 text-xl">
+                    <i class="fa-solid fa-key"></i>
+                </div>
+                <h3 class="font-serif text-2xl font-bold text-rosebrand-950">Acesso Restrito</h3>
+                <p class="text-xs text-rosebrand-700 mt-1">Digite o PIN da equipe para acessar a agenda e o financeiro.</p>
+            </div>
+
+            <form onsubmit="verifyProPin(event)" class="space-y-4">
+                <div>
+                    <input type="password" id="pro-pin-input" inputmode="numeric" maxlength="4" placeholder="••••" required class="w-full text-center text-2xl tracking-[0.6em] font-bold py-3.5 rounded-2xl bg-rosebrand-50 border border-rosebrand-200 text-rosebrand-950 focus:outline-none focus:ring-2 focus:ring-rosebrand-500">
+                    <p class="text-[11px] text-center text-rosebrand-500 mt-2">
+                        <i class="fa-solid fa-circle-info mr-1"></i> Dica para teste: PIN padrão <strong>1234</strong>
+                    </p>
+                </div>
+                <button type="submit" class="w-full py-3.5 bg-rosebrand-600 hover:bg-rosebrand-700 text-white font-bold rounded-2xl shadow-md transition">
+                    Entrar no Painel
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- LÓGICA JAVASCRIPT COMPLETA E PERSISTÊNCIA EM LOCALSTORAGE             -->
+    <!-- ===================================================================== -->
+    <script>
+        /**
+         * DADOS INICIAIS E CONFIGURAÇÕES DO ESTÚDIO
+         */
+        const STUDIO_WHATSAPP = "5511999999999"; // Número fictício do estúdio para envio de comprovante
+        const PRO_PIN = "1234";
+
+        const PROFESSIONALS = [
+            {
+                id: "pro_ana",
+                name: "Ana Clara",
+                role: "Master Nail Designer • Fibra & Gel",
+                avatar: "AC",
+                rating: "5.0"
+            },
+            {
+                id: "pro_beatriz",
+                name: "Beatriz Santos",
+                role: "Especialista em Esmaltação & Nail Art",
+                avatar: "BS",
+                rating: "4.9"
+            }
+        ];
+
+        const SERVICES = [
+            { id: "srv_1", name: "Alongamento em Gel / Fibra", duration: "2h", price: 160.00, desc: "Estrutura resistente, naturalidade e acabamento impecável." },
+            { id: "srv_2", name: "Manutenção de Alongamento", duration: "1h 30m", price: 110.00, desc: "Nivelamento, reposição de produto e nova esmaltação." },
+            { id: "srv_3", name: "Banho de Gel (Blindagem)", duration: "1h 15m", price: 95.00, desc: "Proteção extra sobre a unha natural para evitar quebras." },
+            { id: "srv_4", name: "Esmaltação em Gel", duration: "1h", price: 75.00, desc: "Brilho intenso e durabilidade de até 20 dias sem descascar." },
+            { id: "srv_5", name: "Nail Art / Decoração Encapsulada", duration: "45m", price: 45.00, desc: "Francesinha reversa, baby boomer, pedrarias ou arte manual." },
+            { id: "srv_6", name: "Spa dos Pés + Esmaltação", duration: "1h", price: 85.00, desc: "Esfoliação, hidratação profunda e unhas perfeitas." }
+        ];
+
+        // Horários padrão de funcionamento do estúdio
+        const DEFAULT_TIME_SLOTS = ["09:00", "10:30", "12:00", "13:30", "15:00", "16:30", "18:00"];
+
+        // Chaves do LocalStorage
+        const STORAGE_KEYS = {
+            BOOKINGS: "studio_rose_bookings_v1",
+            CUSTOM_SLOTS: "studio_rose_custom_slots_v1", // Horários extras adicionados { "proId_YYYY-MM-DD": ["19:30"] }
+            BLOCKED_SLOTS: "studio_rose_blocked_slots_v1", // Horários bloqueados { "proId_YYYY-MM-DD": ["12:00"] }
+            BLOCKED_DAYS: "studio_rose_blocked_days_v1" // Dias inteiros bloqueados ["proId_YYYY-MM-DD"]
+        };
+
+        // Estado atual da aplicação
+        let bookingState = {
+            proId: null,
+            serviceId: null,
+            date: null,
+            time: null
+        };
+
+        /**
+         * INICIALIZAÇÃO E SPLASH SCREEN (EXATOS 2 SEGUNDOS)
+         */
+        window.addEventListener("DOMContentLoaded", () => {
+            seedInitialDemoData();
+            renderHomeServicesPreview();
+            populateProSelects();
+
+            // Redireciona automaticamente da Splash Screen após 2 segundos
+            setTimeout(() => {
+                const splash = document.getElementById("splash-screen");
+                const appWrapper = document.getElementById("app-wrapper");
+                
+                splash.classList.add("opacity-0");
+                setTimeout(() => {
+                    splash.classList.add("hidden");
+                    appWrapper.classList.remove("hidden");
+                }, 400);
+            }, 2000);
+        });
+
+        /**
+         * POPULA DADOS DE EXEMPLO NA PRIMEIRA EXECUÇÃO PARA DEMONSTRAÇÃO RICA
+         */
+        function seedInitialDemoData() {
+            if (!localStorage.getItem(STORAGE_KEYS.BOOKINGS)) {
+                const todayStr = getTodayDateString();
+                const demoBookings = [
+                    {
+                        id: "bk_demo_1",
+                        proId: "pro_ana",
+                        serviceId: "srv_1",
+                        date: todayStr,
+                        time: "09:00",
+                        clientName: "Camila Fernandes",
+                        clientPhone: "(11) 98765-4321",
+                        price: 160.00,
+                        status: "confirmed"
+                    },
+                    {
+                        id: "bk_demo_2",
+                        proId: "pro_beatriz",
+                        serviceId: "srv_4",
+                        date: todayStr,
+                        time: "10:30",
+                        clientName: "Juliana Costa",
+                        clientPhone: "(11) 97654-3210",
+                        price: 75.00,
+                        status: "completed"
+                    }
+                ];
+                localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(demoBookings));
+            }
+        }
+
+        /**
+         * UTILITÁRIOS DE DATA, MOEDA E ARMAZENAMENTO
+         */
+        function getTodayDateString() {
+            const now = new Date();
+            const offset = now.getTimezoneOffset();
+            const localDate = new Date(now.getTime() - (offset * 60 * 1000));
+            return localDate.toISOString().split("T")[0];
+        }
+
+        function formatDateBR(dateStr) {
+            if (!dateStr) return "";
+            const [year, month, day] = dateStr.split("-");
+            return `${day}/${month}/${year}`;
+        }
+
+        function formatCurrency(value) {
+            return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+        }
+
+        function getBookings() {
+            return JSON.parse(localStorage.getItem(STORAGE_KEYS.BOOKINGS) || "[]");
+        }
+
+        function saveBookings(list) {
+            localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(list));
+        }
+
+        function getCustomSlotsMap() {
+            return JSON.parse(localStorage.getItem(STORAGE_KEYS.CUSTOM_SLOTS) || "{}");
+        }
+
+        function getBlockedSlotsMap() {
+            return JSON.parse(localStorage.getItem(STORAGE_KEYS.BLOCKED_SLOTS) || "{}");
+        }
+
+        function getBlockedDaysList() {
+            return JSON.parse(localStorage.getItem(STORAGE_KEYS.BLOCKED_DAYS) || "[]");
+        }
+
+        function showToast(message, type = "success") {
+            const container = document.getElementById("toast-container");
+            const toast = document.createElement("div");
+            
+            const colors = type === "error" 
+                ? "bg-rose-700 text-white border-rose-500" 
+                : "bg-rosebrand-900 text-white border-rosebrand-700";
+            const icon = type === "error" ? "fa-circle-exclamation" : "fa-circle-check";
+
+            toast.className = `${colors} border px-4 py-3 rounded-2xl shadow-xl text-xs sm:text-sm font-semibold flex items-center gap-2.5 animate-slide-up`;
+            toast.innerHTML = `<i class="fa-solid ${icon} text-base"></i><span>${message}</span>`;
+            
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add("opacity-0", "transition-opacity", "duration-300");
+                setTimeout(() => toast.remove(), 300);
+            }, 3200);
+        }
+
+        function maskPhone(input) {
+            let v = input.value.replace(/\D/g, "");
+            if (v.length > 11) v = v.slice(0, 11);
+            if (v.length > 6) {
+                input.value = `(${v.slice(0, 2)}) ${v.slice(2, 7)}-${v.slice(7)}`;
+            } else if (v.length > 2) {
+                input.value = `(${v.slice(0, 2)}) ${v.slice(2)}`;
+            } else if (v.length > 0) {
+                input.value = `(${v}`;
+            }
+        }
+
+        /**
+         * NAVEGAÇÃO ENTRE TELAS PRINCIPAIS
+         */
+        function navigateTo(viewName) {
+            const views = ["home", "booking", "my-bookings", "pro-dashboard"];
+            views.forEach(v => {
+                document.getElementById(`view-${v}`).classList.add("hidden");
+            });
+
+            document.getElementById(`view-${viewName}`).classList.remove("hidden");
+
+            const btnBack = document.getElementById("btn-back-home");
+            if (viewName === "home") {
+                btnBack.classList.add("hidden");
+            } else {
+                btnBack.classList.remove("hidden");
+            }
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function renderHomeServicesPreview() {
+            const container = document.getElementById("home-services-preview");
+            container.innerHTML = SERVICES.slice(0, 4).map(s => `
+                <div class="py-2.5 flex items-center justify-between gap-2">
+                    <div>
+                        <p class="text-sm font-bold text-rosebrand-950">${s.name}</p>
+                        <p class="text-[11px] text-rosebrand-600"><i class="fa-regular fa-clock mr-1"></i>${s.duration}</p>
+                    </div>
+                    <span class="text-sm font-extrabold text-rosebrand-700 bg-rosebrand-50 px-3 py-1 rounded-xl border border-rosebrand-100">
+                        ${formatCurrency(s.price)}
+                    </span>
+                </div>
+            `).join("");
+        }
+
+        /**
+         * ===================================================================
+         * FLUXO DE AGENDAMENTO DA CLIENTE
+         * ===================================================================
+         */
+        function startBookingFlow() {
+            bookingState = { proId: null, serviceId: null, date: getTodayDateString(), time: null };
+            renderProfessionalsStep();
+            goToBookingStep(1);
+            navigateTo("booking");
+        }
+
+        function goToBookingStep(stepNumber) {
+            // Esconde todos os passos
+            [1, 2, 3, 4].forEach(n => document.getElementById(`booking-step-${n}`).classList.add("hidden"));
+            document.getElementById("booking-step-success").classList.add("hidden");
+
+            // Atualiza barra de progresso
+            const labels = {
+                1: "Passo 1 de 4: Escolha a Profissional",
+                2: "Passo 2 de 4: Escolha o Serviço",
+                3: "Passo 3 de 4: Data e Horário",
+                4: "Passo 4 de 4: Confirmar Dados"
+            };
+            document.getElementById("booking-step-label").textContent = labels[stepNumber];
+            document.getElementById("booking-step-percent").textContent = `${stepNumber * 25}%`;
+            document.getElementById("booking-progress-bar").style.width = `${stepNumber * 25}%`;
+
+            document.getElementById(`booking-step-${stepNumber}`).classList.remove("hidden");
+        }
+
+        function renderProfessionalsStep() {
+            const container = document.getElementById("professionals-list");
+            container.innerHTML = PROFESSIONALS.map(pro => `
+                <button onclick="selectProfessional('${pro.id}')" class="glass-card p-5 rounded-3xl flex items-center gap-4 text-left hover:border-rosebrand-500 hover:shadow-md transition active:scale-[0.98] group">
+                    <div class="w-14 h-14 rounded-full bg-gradient-to-br from-rosebrand-500 to-rosebrand-700 text-white font-serif text-xl font-bold flex items-center justify-center shrink-0 shadow-md group-hover:scale-105 transition">
+                        ${pro.avatar}
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-rosebrand-950 text-base">${pro.name}</h3>
+                            <span class="text-xs font-bold text-amber-500"><i class="fa-solid fa-star"></i> ${pro.rating}</span>
+                        </div>
+                        <p class="text-xs text-rosebrand-700/80 mt-0.5">${pro.role}</p>
+                    </div>
+                </button>
+            `).join("");
+        }
+
+        function selectProfessional(proId) {
+            bookingState.proId = proId;
+            const pro = PROFESSIONALS.find(p => p.id === proId);
+            document.getElementById("selected-pro-name-step2").textContent = pro.name;
+            renderServicesStep();
+            goToBookingStep(2);
+        }
+
+        function renderServicesStep() {
+            const container = document.getElementById("services-list");
+            container.innerHTML = SERVICES.map(srv => `
+                <button onclick="selectService('${srv.id}')" class="w-full glass-card p-4 rounded-2xl flex items-center justify-between gap-3 text-left hover:border-rosebrand-500 transition active:scale-[0.99]">
+                    <div class="space-y-1">
+                        <h3 class="font-bold text-rosebrand-950 text-sm sm:text-base">${srv.name}</h3>
+                        <p class="text-xs text-rosebrand-700/80 line-clamp-2">${srv.desc}</p>
+                        <span class="inline-block text-[11px] font-semibold text-rosebrand-600 bg-rosebrand-50 px-2.5 py-0.5 rounded-lg">
+                            <i class="fa-regular fa-clock mr-1"></i> Duração: ${srv.duration}
+                        </span>
+                    </div>
+                    <div class="text-right shrink-0">
+                        <span class="block font-extrabold text-rosebrand-700 text-base">${formatCurrency(srv.price)}</span>
+                        <span class="inline-block mt-1 text-[11px] font-bold text-white bg-rosebrand-600 px-3 py-1 rounded-xl">Selecionar</span>
+                    </div>
+                </button>
+            `).join("");
+        }
+
+        function selectService(serviceId) {
+            bookingState.serviceId = serviceId;
+            const pro = PROFESSIONALS.find(p => p.id === bookingState.proId);
+            const srv = SERVICES.find(s => s.id === serviceId);
+
+            document.getElementById("summary-step3-service").textContent = srv.name;
+            document.getElementById("summary-step3-pro").textContent = pro.name;
+
+            const dateInput = document.getElementById("booking-date-input");
+            dateInput.min = getTodayDateString();
+            dateInput.value = bookingState.date || getTodayDateString();
+
+            renderAvailableSlotsForClient();
+            goToBookingStep(3);
+        }
+
+        function handleDateChange() {
+            bookingState.date = document.getElementById("booking-date-input").value;
+            bookingState.time = null;
+            renderAvailableSlotsForClient();
+        }
+
+        /**
+         * CALCULA HORÁRIOS LIVRES DE UMA PROFISSIONAL EM UMA DATA
+         * Combina horários padrão + extras, e remove bloqueados + já agendados
+         */
+        function getFreeSlotsForProAndDate(proId, dateStr) {
+            const key = `${proId}_${dateStr}`;
+            const blockedDays = getBlockedDaysList();
+            
+            // Se o dia inteiro está bloqueado pela profissional
+            if (blockedDays.includes(key)) {
+                return [];
+            }
+
+            const customSlots = getCustomSlotsMap()[key] || [];
+            const blockedSlots = getBlockedSlotsMap()[key] || [];
+            
+            // Junta horários padrão + extras sem duplicatas e ordena cronologicamente
+            const allPossibleSlots = Array.from(new Set([...DEFAULT_TIME_SLOTS, ...customSlots])).sort();
+
+            // Horários já ocupados por agendamentos ativos (não cancelados)
+            const bookedTimes = getBookings()
+                .filter(b => b.proId === proId && b.date === dateStr && b.status !== "cancelled")
+                .map(b => b.time);
+
+            return allPossibleSlots.filter(slot => !blockedSlots.includes(slot) && !bookedTimes.includes(slot));
+        }
+
+        function renderAvailableSlotsForClient() {
+            const container = document.getElementById("available-slots-grid");
+            const dateStr = document.getElementById("booking-date-input").value;
+            bookingState.date = dateStr;
+
+            const freeSlots = getFreeSlotsForProAndDate(bookingState.proId, dateStr);
+
+            if (freeSlots.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full py-6 text-center bg-rosebrand-50 rounded-2xl border border-rosebrand-200 px-4">
+                        <i class="fa-regular fa-calendar-xmark text-2xl text-rosebrand-400 mb-2"></i>
+                        <p class="text-sm font-bold text-rosebrand-900">Sem horários disponíveis nesta data</p>
+                        <p class="text-xs text-rosebrand-600 mt-0.5">Por favor, selecione outro dia no calendário acima.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = freeSlots.map(time => `
+                <button onclick="selectTimeSlot('${time}')" class="py-3 px-2 rounded-xl bg-white border border-rosebrand-200 hover:border-rosebrand-600 hover:bg-rosebrand-600 hover:text-white text-rosebrand-900 font-bold text-sm shadow-sm transition active:scale-95">
+                    ${time}
+                </button>
+            `).join("");
+        }
+
+        function selectTimeSlot(time) {
+            bookingState.time = time;
+            const pro = PROFESSIONALS.find(p => p.id === bookingState.proId);
+            const srv = SERVICES.find(s => s.id === bookingState.serviceId);
+
+            document.getElementById("confirm-price").textContent = formatCurrency(srv.price);
+            document.getElementById("confirm-service").textContent = srv.name;
+            document.getElementById("confirm-pro").textContent = pro.name;
+            document.getElementById("confirm-datetime").textContent = `${formatDateBR(bookingState.date)} às ${bookingState.time}`;
+
+            goToBookingStep(4);
+        }
+
+        function submitBooking(event) {
+            event.preventDefault();
+            const clientName = document.getElementById("client-name").value.trim();
+            const clientPhone = document.getElementById("client-phone").value.trim();
+
+            if (!clientName || clientPhone.length < 14) {
+                showToast("Por favor, preencha seu nome e WhatsApp completo.", "error");
+                return;
+            }
+
+            // Verifica novamente se o horário não foi ocupado no meio tempo
+            const freeSlots = getFreeSlotsForProAndDate(bookingState.proId, bookingState.date);
+            if (!freeSlots.includes(bookingState.time)) {
+                showToast("Ops! Esse horário acabou de ser preenchido. Escolha outro.", "error");
+                goToBookingStep(3);
+                renderAvailableSlotsForClient();
+                return;
+            }
+
+            const srv = SERVICES.find(s => s.id === bookingState.serviceId);
+            const pro = PROFESSIONALS.find(p => p.id === bookingState.proId);
+
+            const newBooking = {
+                id: "bk_" + Date.now(),
+                proId: bookingState.proId,
+                serviceId: bookingState.serviceId,
+                date: bookingState.date,
+                time: bookingState.time,
+                clientName,
+                clientPhone,
+                price: srv.price,
+                status: "confirmed",
+                createdAt: new Date().toISOString()
+            };
+
+            const bookings = getBookings();
+            bookings.push(newBooking);
+            saveBookings(bookings);
+
+            // Exibe tela de sucesso
+            [1, 2, 3, 4].forEach(n => document.getElementById(`booking-step-${n}`).classList.add("hidden"));
+            document.getElementById("booking-step-success").classList.remove("hidden");
+
+            document.getElementById("success-receipt-box").innerHTML = `
+                <p><strong>Cliente:</strong> ${clientName}</p>
+                <p><strong>Serviço:</strong> ${srv.name}</p>
+                <p><strong>Profissional:</strong> ${pro.name}</p>
+                <p><strong>Data e Hora:</strong> ${formatDateBR(bookingState.date)} às ${bookingState.time}</p>
+                <p><strong>Valor:</strong> ${formatCurrency(srv.price)}</p>
+            `;
+
+            const waMessage = encodeURIComponent(
+                `Olá *Studio Rosé*! 💅✨ Acabei de fazer um agendamento pelo app:\n\n` +
+                `*Cliente:* ${clientName}\n` +
+                `*Serviço:* ${srv.name}\n` +
+                `*Profissional:* ${pro.name}\n` +
+                `*Data:* ${formatDateBR(bookingState.date)} às *${bookingState.time}*\n` +
+                `*Valor:* ${formatCurrency(srv.price)}`
+            );
+            document.getElementById("btn-whatsapp-receipt").href = `https://wa.me/${STUDIO_WHATSAPP}?text=${waMessage}`;
+
+            showToast("Agendamento confirmado com sucesso!");
+        }
+
+        /**
+         * ===================================================================
+         * CONSULTA DE AGENDAMENTOS PELA CLIENTE
+         * ===================================================================
+         */
+        function searchClientBookings() {
+            const phoneInput = document.getElementById("search-client-phone").value.trim();
+            const cleanSearch = phoneInput.replace(/\D/g, "");
+            const container = document.getElementById("client-bookings-results");
+
+            if (cleanSearch.length < 8) {
+                showToast("Digite um número de WhatsApp válido.", "error");
+                return;
+            }
+
+            const matches = getBookings().filter(b => b.clientPhone.replace(/\D/g, "").includes(cleanSearch));
+
+            if (matches.length === 0) {
+                container.innerHTML = `
+                    <div class="glass-card p-6 rounded-3xl text-center">
+                        <p class="text-sm font-bold text-rosebrand-900">Nenhum agendamento encontrado</p>
+                        <p class="text-xs text-rosebrand-600 mt-1">Verifique o número digitado ou faça uma nova reserva.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Ordena do mais recente para o mais antigo
+            matches.sort((a, b) => `${b.date} ${b.time}`.localeCompare(`${a.date} ${a.time}`));
+
+            container.innerHTML = matches.map(b => {
+                const srv = SERVICES.find(s => s.id === b.serviceId);
+                const pro = PROFESSIONALS.find(p => p.id === b.proId);
+                const isCancelled = b.status === "cancelled";
+                const isCompleted = b.status === "completed";
+
+                let badgeHtml = `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rosebrand-100 text-rosebrand-700">Confirmado</span>`;
+                if (isCancelled) badgeHtml = `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-100 text-rose-700">Cancelado</span>`;
+                if (isCompleted) badgeHtml = `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-700">Concluído</span>`;
+
+                return `
+                    <div class="glass-card p-4 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${isCancelled ? 'opacity-60' : ''}">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-rosebrand-950 text-sm">${formatDateBR(b.date)} às ${b.time}</span>
+                                ${badgeHtml}
+                            </div>
+                            <p class="text-sm font-semibold text-rosebrand-800">${srv ? srv.name : 'Serviço'}</p>
+                            <p class="text-xs text-rosebrand-600">Profissional: ${pro ? pro.name : ''} • ${formatCurrency(b.price)}</p>
+                        </div>
+                        ${(!isCancelled && !isCompleted) ? `
+                            <button onclick="cancelBookingByClient('${b.id}')" class="px-4 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold transition self-start sm:self-center">
+                                Cancelar Horário
+                            </button>
+                        ` : ''}
+                    </div>
+                `;
+            }).join("");
+        }
+
+        function cancelBookingByClient(bookingId) {
+            const bookings = getBookings();
+            const idx = bookings.findIndex(b => b.id === bookingId);
+            if (idx !== -1) {
+                bookings[idx].status = "cancelled";
+                saveBookings(bookings);
+                showToast("Agendamento cancelado.");
+                searchClientBookings();
+            }
+        }
+
+        /**
+         * ===================================================================
+         * ÁREA DA PROFISSIONAL: LOGIN, FATURAMENTO, AGENDA E HORÁRIOS
+         * ===================================================================
+         */
+        function openProLoginModal() {
+            document.getElementById("pro-pin-input").value = "";
+            document.getElementById("pro-login-modal").classList.remove("hidden");
+            setTimeout(() => document.getElementById("pro-pin-input").focus(), 100);
+        }
+
+        function closeProLoginModal() {
+            document.getElementById("pro-login-modal").classList.add("hidden");
+        }
+
+        function verifyProPin(event) {
+            event.preventDefault();
+            const pin = document.getElementById("pro-pin-input").value.trim();
+            if (pin === PRO_PIN) {
+                closeProLoginModal();
+                initProDashboard();
+                navigateTo("pro-dashboard");
+                showToast("Bem-vinda ao Painel Profissional!");
+            } else {
+                showToast("PIN incorreto. Tente 1234.", "error");
+            }
+        }
+
+        function logoutPro() {
+            navigateTo("home");
+            showToast("Sessão encerrada.");
+        }
+
+        function populateProSelects() {
+            const filterSelect = document.getElementById("pro-filter-select");
+            const manageSelect = document.getElementById("slot-manage-pro");
+
+            PROFESSIONALS.forEach(pro => {
+                const opt1 = document.createElement("option");
+                opt1.value = pro.id;
+                opt1.textContent = pro.name;
+                filterSelect.appendChild(opt1);
+
+                const opt2 = document.createElement("option");
+                opt2.value = pro.id;
+                opt2.textContent = pro.name;
+                manageSelect.appendChild(opt2);
+            });
+        }
+
+        function initProDashboard() {
+            const today = getTodayDateString();
+            document.getElementById("pro-agenda-date").value = today;
+            document.getElementById("slot-manage-date").value = today;
+            refreshProDashboard();
+            renderSlotManagementList();
+        }
+
+        function setProDateToday() {
+            document.getElementById("pro-agenda-date").value = getTodayDateString();
+            refreshProDashboard();
+        }
+
+        function switchProTab(tabName) {
+            const isAgenda = tabName === "agenda";
+            document.getElementById("pro-tab-agenda").classList.toggle("hidden", !isAgenda);
+            document.getElementById("pro-tab-slots").classList.toggle("hidden", isAgenda);
+
+            const btnAgenda = document.getElementById("tab-btn-agenda");
+            const btnSlots = document.getElementById("tab-btn-slots");
+
+            if (isAgenda) {
+                btnAgenda.className = "flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-rosebrand-600 text-white shadow-sm transition";
+                btnSlots.className = "flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-rosebrand-700 hover:bg-rosebrand-50 transition";
+            } else {
+                btnSlots.className = "flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-rosebrand-600 text-white shadow-sm transition";
+                btnAgenda.className = "flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-rosebrand-700 hover:bg-rosebrand-50 transition";
+                renderSlotManagementList();
+            }
+        }
+
+        function refreshProDashboard() {
+            const selectedPro = document.getElementById("pro-filter-select").value;
+            const selectedDate = document.getElementById("pro-agenda-date").value;
+            const today = getTodayDateString();
+            const currentMonthPrefix = today.slice(0, 7); // YYYY-MM
+
+            const allBookings = getBookings();
+            
+            // Filtra por profissional se não estiver em "all"
+            const proBookings = selectedPro === "all" 
+                ? allBookings 
+                : allBookings.filter(b => b.proId === selectedPro);
+
+            // Apenas agendamentos ativos (confirmados ou concluídos) entram no faturamento
+            const validBookings = proBookings.filter(b => b.status !== "cancelled");
+
+            // KPIs Financeiros
+            const todayRevenue = validBookings
+                .filter(b => b.date === today)
+                .reduce((acc, b) => acc + Number(b.price), 0);
+
+            const monthRevenue = validBookings
+                .filter(b => b.date.startsWith(currentMonthPrefix))
+                .reduce((acc, b) => acc + Number(b.price), 0);
+
+            const totalCount = validBookings.length;
+            const avgTicket = totalCount > 0 
+                ? validBookings.reduce((acc, b) => acc + Number(b.price), 0) / totalCount 
+                : 0;
+
+            document.getElementById("kpi-today-revenue").textContent = formatCurrency(todayRevenue);
+            document.getElementById("kpi-month-revenue").textContent = formatCurrency(monthRevenue);
+            document.getElementById("kpi-total-count").textContent = totalCount;
+            document.getElementById("kpi-avg-ticket").textContent = formatCurrency(avgTicket);
+
+            // Renderiza Lista da Agenda na Data Selecionada
+            const dayBookings = proBookings
+                .filter(b => b.date === selectedDate)
+                .sort((a, b) => a.time.localeCompare(b.time));
+
+            const listContainer = document.getElementById("pro-appointments-list");
+
+            if (dayBookings.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="glass-card p-8 rounded-3xl text-center">
+                        <i class="fa-regular fa-calendar text-3xl text-rosebrand-300 mb-2"></i>
+                        <p class="text-sm font-bold text-rosebrand-900">Nenhum agendamento para ${formatDateBR(selectedDate)}</p>
+                        <p class="text-xs text-rosebrand-600 mt-1">Os horários marcados pelas clientes aparecerão aqui.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            listContainer.innerHTML = dayBookings.map(b => {
+                const srv = SERVICES.find(s => s.id === b.serviceId);
+                const pro = PROFESSIONALS.find(p => p.id === b.proId);
+                const cleanPhone = b.clientPhone.replace(/\D/g, "");
+                const waReminder = encodeURIComponent(`Olá ${b.clientName}! Passando para confirmar seu horário no *Studio Rosé* hoje às *${b.time}* (${srv ? srv.name : ''}). Te esperamos! 💅✨`);
+
+                let statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800">Agendado</span>`;
+                if (b.status === "completed") statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800">Concluído</span>`;
+                if (b.status === "cancelled") statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-100 text-rose-700">Cancelado</span>`;
+
+                return `
+                    <div class="glass-card p-4 rounded-2xl space-y-3 ${b.status === 'cancelled' ? 'opacity-60' : ''}">
+                        <div class="flex items-start justify-between gap-2">
+                            <div class="flex items-center gap-3">
+                                <div class="px-3 py-2 rounded-xl bg-rosebrand-600 text-white font-extrabold text-sm shadow-sm">
+                                    ${b.time}
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-rosebrand-950 text-base">${b.clientName}</h4>
+                                    <p class="text-xs text-rosebrand-700">${srv ? srv.name : ''} • <strong>${formatCurrency(b.price)}</strong></p>
+                                    <p class="text-[11px] text-rosebrand-500">Profissional: ${pro ? pro.name : ''}</p>
+                                </div>
+                            </div>
+                            ${statusBadge}
+                        </div>
+
+                        <div class="pt-2 border-t border-rosebrand-100 flex flex-wrap items-center justify-between gap-2">
+                            <a href="https://wa.me/55${cleanPhone}?text=${waReminder}" target="_blank" class="px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-xs font-bold flex items-center gap-1.5 transition">
+                                <i class="fa-brands fa-whatsapp text-sm"></i> ${b.clientPhone}
+                            </a>
+
+                            ${b.status === "confirmed" ? `
+                                <div class="flex items-center gap-2">
+                                    <button onclick="updateBookingStatus('${b.id}', 'completed')" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition">
+                                        <i class="fa-solid fa-check mr-1"></i> Concluir
+                                    </button>
+                                    <button onclick="updateBookingStatus('${b.id}', 'cancelled')" class="px-3 py-1.5 rounded-xl bg-rose-100 hover:bg-rose-200 text-rose-700 text-xs font-bold transition">
+                                        Cancelar
+                                    </button>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        function updateBookingStatus(bookingId, newStatus) {
+            const bookings = getBookings();
+            const idx = bookings.findIndex(b => b.id === bookingId);
+            if (idx !== -1) {
+                bookings[idx].status = newStatus;
+                saveBookings(bookings);
+                refreshProDashboard();
+                showToast(newStatus === "completed" ? "Atendimento concluído e faturado!" : "Agendamento cancelado.");
+            }
+        }
+
+        /**
+         * GESTÃO DE HORÁRIOS EXTRAS E BLOQUEIOS PELA PROFISSIONAL
+         */
+        function renderSlotManagementList() {
+            const proId = document.getElementById("slot-manage-pro").value;
+            const dateStr = document.getElementById("slot-manage-date").value;
+            const key = `${proId}_${dateStr}`;
+
+            const blockedDays = getBlockedDaysList();
+            const isDayBlocked = blockedDays.includes(key);
+
+            // Atualiza botão de bloquear dia inteiro
+            const btnDay = document.getElementById("btn-toggle-block-day");
+            if (isDayBlocked) {
+                btnDay.className = "px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition shrink-0";
+                btnDay.innerHTML = `<i class="fa-solid fa-unlock mr-1"></i> Liberar Dia`;
+            } else {
+                btnDay.className = "px-4 py-2.5 rounded-xl bg-rose-100 hover:bg-rose-200 text-rose-800 text-xs font-bold transition shrink-0";
+                btnDay.innerHTML = `<i class="fa-solid fa-ban mr-1"></i> Bloquear Dia`;
+            }
+
+            const grid = document.getElementById("pro-slots-control-grid");
+            if (isDayBlocked) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-6 text-center bg-rose-50 border border-rose-200 rounded-2xl">
+                        <i class="fa-solid fa-ban text-2xl text-rose-500 mb-1"></i>
+                        <p class="text-sm font-bold text-rose-900">Dia Inteiro Bloqueado</p>
+                        <p class="text-xs text-rose-700">Nenhum cliente consegue agendar nesta data.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const customSlots = getCustomSlotsMap()[key] || [];
+            const blockedSlots = getBlockedSlotsMap()[key] || [];
+            const bookedTimes = getBookings()
+                .filter(b => b.proId === proId && b.date === dateStr && b.status !== "cancelled")
+                .map(b => b.time);
+
+            const allSlots = Array.from(new Set([...DEFAULT_TIME_SLOTS, ...customSlots])).sort();
+
+            grid.innerHTML = allSlots.map(time => {
+                const isBooked = bookedTimes.includes(time);
+                const isBlocked = blockedSlots.includes(time);
+                const isExtra = customSlots.includes(time);
+
+                if (isBooked) {
+                    return `
+                        <div class="p-2.5 rounded-xl bg-rosebrand-100 border border-rosebrand-300 text-center opacity-80">
+                            <span class="block font-bold text-xs text-rosebrand-950">${time}</span>
+                            <span class="text-[10px] font-bold text-rosebrand-700">Ocupado</span>
+                        </div>
+                    `;
+                }
+
+                if (isBlocked) {
+                    return `
+                        <button onclick="toggleBlockSingleSlot('${time}')" class="p-2.5 rounded-xl bg-rose-100 border border-rose-300 text-center hover:bg-rose-200 transition">
+                            <span class="block font-bold text-xs text-rose-900 line-through">${time}</span>
+                            <span class="text-[10px] font-bold text-rose-700"><i class="fa-solid fa-lock"></i> Bloqueado</span>
+                        </button>
+                    `;
+                }
+
+                return `
+                    <button onclick="toggleBlockSingleSlot('${time}')" class="p-2.5 rounded-xl bg-white border border-emerald-200 hover:border-rose-400 text-center shadow-sm transition group">
+                        <span class="block font-bold text-xs text-rosebrand-950">${time}</span>
+                        <span class="text-[10px] font-bold text-emerald-600 group-hover:hidden">${isExtra ? 'Extra • Livre' : 'Livre'}</span>
+                        <span class="text-[10px] font-bold text-rose-600 hidden group-hover:inline">Bloquear</span>
+                    </button>
+                `;
+            }).join("");
+        }
+
+        function toggleBlockWholeDay() {
+            const proId = document.getElementById("slot-manage-pro").value;
+            const dateStr = document.getElementById("slot-manage-date").value;
+            const key = `${proId}_${dateStr}`;
+
+            let blockedDays = getBlockedDaysList();
+            if (blockedDays.includes(key)) {
+                blockedDays = blockedDays.filter(item => item !== key);
+                showToast("Dia liberado na agenda!");
+            } else {
+                blockedDays.push(key);
+                showToast("Dia inteiro bloqueado com sucesso.");
+            }
+            localStorage.setItem(STORAGE_KEYS.BLOCKED_DAYS, JSON.stringify(blockedDays));
+            renderSlotManagementList();
+        }
+
+        function addExtraSlot() {
+            const proId = document.getElementById("slot-manage-pro").value;
+            const dateStr = document.getElementById("slot-manage-date").value;
+            const newTime = document.getElementById("extra-slot-time").value;
+
+            if (!newTime) {
+                showToast("Selecione um horário para adicionar.", "error");
+                return;
+            }
+
+            const key = `${proId}_${dateStr}`;
+            const customMap = getCustomSlotsMap();
+            if (!customMap[key]) customMap[key] = [];
+
+            if (DEFAULT_TIME_SLOTS.includes(newTime) || customMap[key].includes(newTime)) {
+                showToast("Este horário já existe na grade.", "error");
+                return;
+            }
+
+            customMap[key].push(newTime);
+            localStorage.setItem(STORAGE_KEYS.CUSTOM_SLOTS, JSON.stringify(customMap));
+            document.getElementById("extra-slot-time").value = "";
+            
+            renderSlotManagementList();
+            showToast(`Horário extra ${newTime} adicionado!`);
+        }
+
+        function toggleBlockSingleSlot(time) {
+            const proId = document.getElementById("slot-manage-pro").value;
+            const dateStr = document.getElementById("slot-manage-date").value;
+            const key = `${proId}_${dateStr}`;
+
+            const blockedMap = getBlockedSlotsMap();
+            if (!blockedMap[key]) blockedMap[key] = [];
+
+            if (blockedMap[key].includes(time)) {
+                blockedMap[key] = blockedMap[key].filter(t => t !== time);
+                showToast(`Horário ${time} liberado.`);
+            } else {
+                blockedMap[key].push(time);
+                showToast(`Horário ${time} bloqueado.`);
+            }
+
+            localStorage.setItem(STORAGE_KEYS.BLOCKED_SLOTS, JSON.stringify(blockedMap));
+            renderSlotManagementList();
+        }
+    </script>
+</body>
+</html>
